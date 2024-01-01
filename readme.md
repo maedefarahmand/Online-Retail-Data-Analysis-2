@@ -10,7 +10,8 @@ Some of the key insights about the data include:
 
 * What is the monthly trend of revenue, which months have faced the biggest increase/decrease?
 
-	On the second page of the report, I used the following DAX formula to calculate month over month ratio. 
+	On the second page of the report, I used the following DAX formula to calculate month over month ratio.
+
 	```md-dax
 	UnitPrice MoM% = 
 	IF(
@@ -35,7 +36,34 @@ Some of the key insights about the data include:
 
 * What is the percentage of customers who are repeating their orders? Are they ordering the same products or different?
 
-	I created a new column called timesrepeating and filtered the data on timesrepeating greater than one so that I could identify customers who purchased repeatedly more than once and view the products they bought 
-```md-dax
-isRepeating = CALCULATE(DISTINCTCOUNT('Online Retail'[InvoiceNo]),ALLEXCEPT('Online Retail','Online Retail'[CustomerID]))
-```
+	I created a new column called timesrepeating and filtered the data on timesrepeating greater than one so that I could identify customers who purchased repeatedly more than once and view the products they bought. 
+	
+	```md-dax
+	isRepeating = CALCULATE(DISTINCTCOUNT('Online Retail'[InvoiceNo]),ALLEXCEPT('Online Retail','Online Retail'[CustomerID]))
+	```
+
+* For the repeat customers, how long does it take for them to place the next order after being delivered the previous one?
+	
+	I used this code to track duration between repeating orders
+	```md-dax
+		TimeBetweenOrders = 
+	VAR CurrentOrderDate = 'Online Retail'[InvoiceDate]
+	VAR PreviousOrderDate = CALCULATE(
+							MAX('Online Retail'[InvoiceDate]),
+							FILTER(
+								ALL('Online Retail'),
+								'Online Retail'[CustomerID] = EARLIER('Online Retail'[CustomerID]) &&
+								'Online Retail'[InvoiceDate] < EARLIER('Online Retail'[InvoiceDate])
+							)
+						)
+	RETURN
+		IF(ISBLANK(PreviousOrderDate), BLANK(), DATEDIFF(PreviousOrderDate, CurrentOrderDate, DAY))
+
+	```
+* What revenue is being generated from the customers who have ordered more than once?
+
+	I created a table based on the customers who purchased more than one time ( repeating customers ) and calculated totalPrice for each customer and total revenue got calculated as a result. I also showed this value in a seperate card.
+
+* Who are the customers that have repeated the most? How much are they contributing to revenue?
+
+	I filtered the data on most times of ordering and calculated total revenue by the customer who ordered that number of times.
