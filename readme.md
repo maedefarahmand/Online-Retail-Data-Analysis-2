@@ -6,11 +6,11 @@ This project is to analyze sales data of an online store. The source data is fro
 Some of the key insights about the data include:
 * Which region is generating the highest revenue and which region is generating the lowest?
 
-On the first page of the report, I used a clustered bar chart to identify top 5 countries in revenue and bottom 5 countries in revenue.
+	On the first page of the report, I used a clustered bar chart to identify top 5 countries in revenue and bottom 5 countries in revenue.
 
 * What is the monthly trend of revenue, which months have faced the biggest increase/decrease?
 
-On the second page of the report, I used the following DAX formula to calculate month over month ratio. 
+	On the second page of the report, I used the following DAX formula to calculate month over month ratio. 
 ```md-dax
 UnitPrice MoM% = 
 IF(
@@ -27,5 +27,5 @@ IF(
 ```
 * Which months generated the most revenue? Is there a seasonality in sales?
 
-On the third page of the report, I used a line chart to track seasonality in sales.
+	On the third page of the report, I used a line chart to track seasonality in sales.
 
