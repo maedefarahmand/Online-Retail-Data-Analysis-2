@@ -39,7 +39,7 @@ Some of the key insights about the data include:
 	I created a new column called timesrepeating and filtered the data on timesrepeating greater than one so that I could identify customers who purchased repeatedly more than once and view the products they bought. 
 	
 	```md-dax
-	isRepeating = CALCULATE(DISTINCTCOUNT('Online Retail'[InvoiceNo]),ALLEXCEPT('Online Retail','Online Retail'[CustomerID]))
+	timesRepeating = CALCULATE(DISTINCTCOUNT('Online Retail'[InvoiceNo]),ALLEXCEPT('Online Retail','Online Retail'[CustomerID]))
 	```
 
 * For the repeat customers, how long does it take for them to place the next order after being delivered the previous one?
